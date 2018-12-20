@@ -11,10 +11,6 @@ import * as fromServices from './services';
   imports: [CommonModule, MyMaterialModule, ChartsModule, ReactiveFormsModule],
   declarations: [...fromComponents.components],
   providers: [...fromServices.services],
-  exports: [
-    ...fromComponents.components,
-    ...fromServices.services,
-    ReactiveFormsModule,
-  ],
+  exports: [...fromComponents.components, ReactiveFormsModule],
 })
 export class HomeModule {}
