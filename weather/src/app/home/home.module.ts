@@ -1,18 +1,20 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MyMaterialModule } from './material.module';
-import { ChartsModule } from 'ng2-charts';
-import * as fromComponents from './components'
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
+
+import * as fromComponents from './components';
+import { MyMaterialModule } from './material.module';
+import * as fromServices from './services';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MyMaterialModule,
-    ChartsModule,
+  imports: [CommonModule, MyMaterialModule, ChartsModule, ReactiveFormsModule],
+  declarations: [...fromComponents.components],
+  providers: [...fromServices.services],
+  exports: [
+    ...fromComponents.components,
+    ...fromServices.services,
     ReactiveFormsModule,
   ],
-  declarations: [...fromComponents.components],
-  exports: [...fromComponents.components, ReactiveFormsModule ],
 })
-export class HomeModule { }
+export class HomeModule {}
