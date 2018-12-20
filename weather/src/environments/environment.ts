@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_ENDPOINT: 'https://s3.eu-west-2.amazonaws.com/interview-question-data/',
+  API_ENDPOINT: 'https://s3.eu-west-2.amazonaws.com/interview-question-data',
 };
 
 /*
