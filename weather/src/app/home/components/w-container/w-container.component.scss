@@ -1,0 +1,18 @@
+@media screen and (min-width: 768px) {
+  .widget-sizing {
+    height: calc(100vh - 140px);
+    width: calc(100vh - 140px);
+  }
+}
+@media screen and (min-width: 400px) and (max-width: 767px) {
+  .widget-sizing {
+    height: calc(100vh - 240px);
+    width: calc(100vh - 240px);
+  }
+}
+@media screen and (max-width: 399px) {
+  .widget-sizing {
+    height: 350;
+    width: 300;
+  }
+}
