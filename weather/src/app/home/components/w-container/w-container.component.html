@@ -1,0 +1,61 @@
+<form [formGroup]="form">
+  <div class="row w-100">
+    <div class="col-md-4 col-sm-12">
+      <mat-form-field>
+        <mat-select formControlName="location">
+          <mat-option *ngFor="let item of locations" [value]="item">{{
+            item.label
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="start"
+          [min]="minValue"
+          [max]="maxValue"
+          placeholder="Start"
+          formControlName="start"
+        />
+        <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+        <mat-datepicker #start startView="year"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="end"
+          placeholder="End"
+          [min]="minValueEnd"
+          [max]="maxValueEnd"
+          formControlName="end"
+        />
+        <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+        <mat-datepicker #end startView="year"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+      <div class="d-flex flex-column align-items-center">
+        <div
+          class="d-block"
+          style="height: calc(100vh - 140px); width: calc(100vh - 140px)"
+        >
+          <canvas
+            baseChart
+            width="400"
+            height="400"
+            [datasets]="dateSets"
+            [labels]="dataLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [chartType]="'line'"
+          >
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
