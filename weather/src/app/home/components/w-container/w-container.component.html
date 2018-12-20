@@ -37,16 +37,15 @@
         <mat-datepicker #end startView="year"></mat-datepicker>
       </mat-form-field>
     </div>
-    <div class="col-12">
+    <div class="col-12 mr-2 ml-2">
       <div class="d-flex flex-column align-items-center">
         <div
-          class="d-block"
-          style="height: calc(100vh - 140px); width: calc(100vh - 140px)"
+          class="d-block widget-sizing"
         >
           <canvas
             baseChart
-            width="400"
-            height="400"
+            width="300"
+            height="300"
             [datasets]="dateSets"
             [labels]="dataLabels"
             [options]="lineChartOptions"

@@ -2,15 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { combineLatest, forkJoin, Observable, of } from 'rxjs';
-import {
-  filter,
-  map,
-  switchMap,
-  take,
-  takeWhile,
-  tap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { filter, switchMap, takeWhile, tap } from 'rxjs/operators';
 
 import {
   IChartData,
@@ -24,7 +16,7 @@ import { WeatherService } from '../../services/';
 @Component({
   selector: 'app-w-container',
   templateUrl: './w-container.component.html',
-  styles: [],
+  styleUrls: ['./w-container.component.scss'],
 })
 export class WContainerComponent implements OnInit, OnDestroy {
   minValue = moment('19100101');
