@@ -29,11 +29,6 @@ export interface IDataSet {
   rain: number;
 }
 
-export interface IChartData {
-  data: number[];
-  label: string;
-}
-
 export interface ILocationDrop {
   value: WLocation;
   label: string;
