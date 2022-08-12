@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ChartConfiguration } from 'chart.js';
 import * as moment from 'moment';
 import { combineLatest, forkJoin, Observable, of } from 'rxjs';
 import { filter, switchMap, takeWhile, tap } from 'rxjs/operators';
 
 import {
-  IChartData,
+  IDataResponse,
   IDataSet,
   ILocationDrop,
   MetricValue,
@@ -33,15 +34,15 @@ export class WContainerComponent implements OnInit, OnDestroy {
   ];
 
   form = this.fb.group({
-    location: this.fb.control('', Validators.required),
+    location: this.fb.control(null, Validators.required),
     start: this.fb.control(null, Validators.required),
     end: this.fb.control(null, Validators.required),
   });
 
-  dateSets: IChartData[] = [
-    { data: [], label: `${MetricValue.Rainfall} (mm)` },
-    { data: [], label: `${MetricValue.Tmax} (deg)` },
-    { data: [], label: `${MetricValue.Tmin} (deg)` },
+  dateSets:  ChartConfiguration['data']['datasets'] = [
+    { data: [], label: `${MetricValue.Rainfall} (mm)`, borderColor: 'rgba(100,100,200,0.6)'  },
+    { data: [], label: `${MetricValue.Tmax} (deg)`, borderColor: 'rgba(200,0,0,1)' },
+    { data: [], label: `${MetricValue.Tmin} (deg)`, borderColor: 'rgba(0,0,220,1)' }
   ];
 
   dataLabels: string[] = [];
@@ -49,26 +50,14 @@ export class WContainerComponent implements OnInit, OnDestroy {
     responsive: true,
   };
 
-  lineChartColors = [
-    {
-      borderColor: 'rgba(100,100,200,0.6)',
-    },
-    {
-      borderColor: 'rgba(200,0,0,1)',
-    },
-    {
-      borderColor: 'rgba(0,0,220,1)',
-    },
-  ];
-
   private componentActive = true;
 
   ngOnInit() {
-    combineLatest(
+    combineLatest([
       this.form.controls.location.valueChanges,
       this.form.controls.start.valueChanges,
       this.form.controls.end.valueChanges
-    )
+    ])
       .pipe(
         filter(([l, s, e]) => !!s && !!e && !!l),
         takeWhile(() => this.componentActive),
@@ -118,10 +107,10 @@ export class WContainerComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getValues([s, e, l]): Observable<
+  private getValues([s, e, l]: [moment.Moment, moment.Moment, WLocation]): Observable<
     [moment.Moment, moment.Moment, IDataSet[]]
   > {
-    return forkJoin(
+    return forkJoin([
       this.service.getMetricsForInterval({
         location: l,
         metric: MetricValue.Rainfall,
@@ -134,14 +123,14 @@ export class WContainerComponent implements OnInit, OnDestroy {
         location: l,
         metric: MetricValue.Tmin,
       })
-    ).pipe(
+    ]).pipe(
       filter(([r, max, min]) => !!r.length && !!max.length && !!min.length),
       switchMap(([r, max, min]) =>
         of([
           s,
           e,
           r.reduce(
-            (p, c, ci) => [
+            (p, c: IDataResponse, ci) => [
               ...p,
               {
                 date: `${c.year}${c.month < 10 ? `0${c.month}` : c.month}01`,
@@ -150,7 +139,7 @@ export class WContainerComponent implements OnInit, OnDestroy {
                 rain: c.value,
               },
             ],
-            []
+            [] as Array<IDataSet>
           ),
         ] as [moment.Moment, moment.Moment, IDataSet[]])
       )

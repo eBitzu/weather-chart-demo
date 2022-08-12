@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import {
-  MatCheckboxModule,
-  MatDatepickerModule,
-  MatInputModule,
-  MatSelectModule,
-} from '@angular/material';
+
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
